@@ -5,6 +5,8 @@ use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+use std::fmt;
+
 /// The intent to either capture payment immediately or authorize a payment for an order after order creation.
 #[derive(Debug, Serialize, Deserialize, Eq, PartialEq, Copy, Clone)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
@@ -843,6 +845,12 @@ pub enum OrderStatus {
     Voided,
     /// The payment was authorized or the authorized payment was captured for the order.
     Completed,
+}
+
+impl fmt::Display for OrderStatus {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 /// An order represents a payment between two or more parties.
